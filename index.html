@@ -132,7 +132,6 @@
             opacity: 0.7;
         }
 
-        /* TELA DE SUCESSO */
         #success-screen {
             display: none;
             text-align: center;
@@ -184,8 +183,8 @@
                     <input type="text" id="discord" required placeholder="exemplo#0000">
                 </div>
                 <div class="form-group">
-                    <label>Data de Nascimento</label>
-                    <input type="date" id="nascimento" required>
+                    <label>ID / Perfil Roblox</label>
+                    <input type="text" id="robloxId" required placeholder="Nome de usuário ou Link">
                 </div>
                 <div class="form-group">
                     <label>Idade Atual</label>
@@ -193,14 +192,24 @@
                 </div>
             </div>
 
-            <div class="section-title">Experiência</div>
+            <div class="section-title">Experiência & Regras</div>
             <div class="form-group">
-                <label>Onde você já atuou como Staff?</label>
-                <textarea id="experiencia" placeholder="Liste grupos ou jogos..."></textarea>
+                <label>Onde você já atuou como Staff? (Cite os grupos)</label>
+                <textarea id="experiencia" placeholder="Liste suas experiências passadas..."></textarea>
             </div>
-            <div class="form-group">
-                <label>Ferramentas que domina (Logs, Admins, etc)</label>
-                <input type="text" id="ferramentas" required placeholder="Ex: F3X, Adonis, Logs">
+            <div class="grid">
+                <div class="form-group">
+                    <label>Conhecimento das Regras</label>
+                    <select id="conhecimento">
+                        <option value="Iniciante">Iniciante (Li agora)</option>
+                        <option value="Intermediário">Intermediário (Já conheço o básico)</option>
+                        <option value="Avançado">Avançado (Sei todas de cor)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Ferramentas que domina</label>
+                    <input type="text" id="ferramentas" required placeholder="Ex: F3X, Adonis, Logs">
+                </div>
             </div>
 
             <div class="section-title">Disponibilidade</div>
@@ -221,10 +230,14 @@
                 </div>
             </div>
 
-            <div class="section-title">Psicológico</div>
+            <div class="section-title">Psicológico & Conduta</div>
             <div class="form-group">
-                <label>Por que escolher você?</label>
-                <textarea id="motivo" required placeholder="Destaque suas qualidades..."></textarea>
+                <label>Por que quer entrar para a Crazzy Beamers?</label>
+                <textarea id="motivo" required placeholder="O que te motiva?"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Se um superior seu abusar do cargo, como você reagiria?</label>
+                <textarea id="superiorAbuso" required placeholder="Descreva sua atitude profissional..."></textarea>
             </div>
             <div class="form-group">
                 <label>Se um amigo Staff violar as regras, o que você faz?</label>
@@ -243,7 +256,7 @@
                 🌟 EM ATÉ 24 HORAS VOCÊ RECEBERÁ O RESULTADO 🌟
             </p>
         </div>
-        <p style="color: #aaa;">Obrigado por escolher a Crazzy Beamers. Seus dados foram criptografados e enviados.</p>
+        <p style="color: #aaa;">Sua inscrição foi enviada para o nosso sistema de auditoria.</p>
     </div>
 </div>
 
@@ -255,32 +268,36 @@
         const formDiv = document.getElementById('form-content');
         const successDiv = document.getElementById('success-screen');
         
-        // Link do Webhook - Lembre-se de não apagar este webhook no Discord
-        const webhook = "https://discord.com/api/webhooks/1464100991199613003/tm8jZwjiEZ7S6oCd8F8XgapS9NUWzQCap7cP56DsHjlJ9tIxkQfKL4iPii_bTqw8XSbP";
+        // NOVA WEBHOOK ATUALIZADA
+        const webhook = "https://discord.com/api/webhooks/1475304447943901264/czRLjdihy493jlx16gwE3ctMuIMLRMA4to1yJ36L7HnkZ6tz-nUUesdocPagaQxdkWAF";
 
         const payload = {
             username: "Auditoria Crazzy Beamers",
             avatar_url: "https://r2.erweima.ai/ai_image/9589d892-959c-4860-9bc8-e215f795744a.jpg",
             embeds: [{
                 title: "💠 NOVA INSCRIÇÃO PARA STAFF",
-                color: 10878975, // Cor roxa
+                color: 10878975,
                 timestamp: new Date().toISOString(),
                 fields: [
                     { name: "👤 Candidato", value: `**${document.getElementById('nome').value}**`, inline: true },
                     { name: "🎮 Discord", value: document.getElementById('discord').value, inline: true },
-                    { name: "🎂 Idade/Nasc", value: `${document.getElementById('idade').value} anos (${document.getElementById('nascimento').value})`, inline: true },
-                    { name: "⏰ Disponibilidade", value: `${document.getElementById('horas').value} (${document.getElementById('periodo').value})`, inline: true },
+                    { name: "🆔 Roblox", value: document.getElementById('robloxId').value, inline: true },
+                    { name: "🎂 Idade", value: `${document.getElementById('idade').value} anos`, inline: true },
+                    { name: "⏰ Horas", value: document.getElementById('horas').value, inline: true },
+                    { name: "🕒 Período", value: document.getElementById('periodo').value, inline: true },
+                    { name: "📚 Regras", value: document.getElementById('conhecimento').value, inline: true },
                     { name: "🛠️ Ferramentas", value: document.getElementById('ferramentas').value, inline: true },
                     { name: "📜 Experiência", value: document.getElementById('experiencia').value || "Não informada" },
                     { name: "🎯 Motivação", value: document.getElementById('motivo').value },
-                    { name: "⚖️ Ética Profissional", value: document.getElementById('etica').value }
+                    { name: "⚖️ Ética (Staff Amigo)", value: document.getElementById('etica').value },
+                    { name: "🚨 Reação (Abuso Superior)", value: document.getElementById('superiorAbuso').value }
                 ],
-                footer: { text: "ID de Auditoria Interna | Crazzy Beamers" }
+                footer: { text: "Recrutamento Automático | Crazzy Beamers" }
             }]
         };
 
         btn.disabled = true;
-        btn.innerHTML = '<span style="animation: pulse 1s infinite">ENVIANDO PARA O BANCO...</span>';
+        btn.innerHTML = 'ENVIANDO...';
 
         try {
             const response = await fetch(webhook, {
@@ -297,7 +314,7 @@
                 throw new Error();
             }
         } catch (err) {
-            alert("⚠️ ALERTA: Ocorreu um erro na conexão com o servidor. Verifique sua internet ou tente novamente mais tarde.");
+            alert("⚠️ Erro ao enviar! Verifique se a Webhook está configurada corretamente no Discord.");
             btn.disabled = false;
             btn.innerText = "Enviar Candidatura Profissional";
         }
@@ -305,4 +322,4 @@
 </script>
 
 </body>
-</html>
+    </html>
